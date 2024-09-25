@@ -1,0 +1,47 @@
+import java.util.HashSet;
+import java.util.Set;
+/* Finding 14 consecutive letters in a string that do not appear more than once. 
+* Using HashSet and and CharAt
+* Using the sliding window logic recursively. 
+*  Java
+*/ 
+  public class Main {
+    public static void main(String[] args) {
+        String word = "qweratyuaiioapaasdfaghajkdalzxfcvbddfnmnbvcxzlkjhgfp";
+        
+        // just a random batch of letters that I added could always change it to a random or what user wants to add.
+        int lengthOfWindow = 14;
+
+        // Start the recursion with the full word, an empty set, and the start index of 0
+        findUniqueSubstring(word, lengthOfWindow, 0);
+    }
+
+    // Recursive method to find 14 unique consecutive characters
+    public static void findUniqueSubstring(String word, int windowSize, int startIndex) {
+        
+      // If there aren't enough characters left to form a valid window, stop recursion
+        if (startIndex + windowSize > word.length()) {
+            System.out.println("No substring of length " + windowSize + " with unique characters found.");
+            return;
+        }
+
+        // Create a set to store unique characters
+        Set<Character> set = new HashSet<>();
+
+        // Check if the current window (substring) has all unique characters
+        for (int i = startIndex; i < startIndex + windowSize; i++) {
+            char currentChar = word.charAt(i);
+            if (set.contains(currentChar)) {
+                // If a duplicate is found, move the window one step to the right and recurse
+                findUniqueSubstring(word, windowSize, startIndex + 1);
+                return;
+            }
+           
+            set.add(currentChar); 
+            // Add the character to the set
+        }
+
+        // If we found 14 unique characters, print them
+        System.out.println("14 consecutive characters: " + word.substring(startIndex, startIndex + windowSize));
+    }
+}
